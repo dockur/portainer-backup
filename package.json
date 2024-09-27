@@ -44,7 +44,7 @@
         "dev-null": "^0.1.1",
         "figlet": "^1.7.0",
         "figures": "^6.1.0",
-        "gradient-string": "^2.0.2",
+        "gradient-string": "^3.0.0",
         "log-symbols": "^7.0.0",
         "luxon": "^3.4.4",
         "node-cron": "^3.0.3",
