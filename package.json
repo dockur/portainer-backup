@@ -51,7 +51,7 @@
         "pretty-bytes": "^6.1.1",
         "sanitize-filename": "^1.6.3",
         "semver-parser": "^4.1.7",
-        "uuid": "^10.0.0",
+        "uuid": "^11.0.0",
         "yargs": "^17.7.2"
     }
 }
