@@ -71,9 +71,7 @@ This utility requires a single command to execute one of the built in operations
 | [`stacks`](#stacks)     | Backup portainer stacks          |
 | [`test`](#test)         | Test backup (no files are saved) |
 | [`info`](#info)         | Get portainer server info        |
-| [`restore`](#restore)   | Restore portainer data           |
 
-> **NOTE:** The `restore` command is not currently implemented due to issues with the Portainer API.
 
 ### Backup
 
@@ -163,7 +161,7 @@ docker run -it --rm \
 
 ### Restore
 
-The **restore** operation is not implemented at this time.  We encountered trouble getting the Portainer **restore** API (https://app.swaggerhub.com/apis/portainer/portainer-ce/2.11.1#/backup/Restore) to work properly and are investigating this issue further.
+The backup file generated can be used with portainers built in restore function. See here for details: https://docs.portainer.io/admin/settings/general#restoring-from-a-local-file
 
 ---
 
