@@ -44,6 +44,7 @@ services:
       PORTAINER_BACKUP_FILENAME: "portainer-backup.tar.gz"
     volumes:
       - /var/backup:/backup
+    restart: always
 ```
 
 Via Docker CLI:
