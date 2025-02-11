@@ -12,7 +12,7 @@
 
 </div></h1>
 
-Fork of [Portainer Backup](https://github.com/SavageSoftware/portainer-backup) by SavageSoftware with some small bugfixes and updated dependencies.
+Fork of [Portainer Backup](https://github.com/SavageSoftware/portainer-backup) with some minor bugfixes and updated dependencies.
 
 ## Features ✨
 
@@ -352,7 +352,7 @@ The folllowing substition **presets** are provided my the [Luxon](https://moment
 
  # Acknowledgements 🙏
  
-Special thanks to [@SavageSoftware](https://github.com/SavageSoftware).
+Special thanks to [@SavageSoftware](https://github.com/SavageSoftware) for creating the original project.
 
 ## Stars 🌟
 [![Stars](https://starchart.cc/dockur/portainer-backup.svg?variant=adaptive)](https://starchart.cc/dockur/portainer-backup)
