@@ -1,7 +1,7 @@
 services:
   portainer-backup:
-    container_name: portainer-backup
     image: dockurr/portainer-backup
+    container_name: portainer-backup
     command: schedule
     environment:
       TZ: "America/New_York"
@@ -16,5 +16,5 @@ services:
       PORTAINER_BACKUP_DIRECTORY: "/backup"
       PORTAINER_BACKUP_FILENAME: "portainer-backup.tar.gz"
     volumes:
-      - /var/backup:/backup
+      - ./backup:/backup
     restart: always
