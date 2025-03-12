@@ -27,8 +27,8 @@ Via Docker Compose:
 ```yaml
 services:
   portainer-backup:
-    container_name: portainer-backup
     image: dockurr/portainer-backup
+    container_name: portainer-backup
     command: schedule
     environment:
       TZ: "America/New_York"
@@ -43,7 +43,7 @@ services:
       PORTAINER_BACKUP_DIRECTORY: "/backup"
       PORTAINER_BACKUP_FILENAME: "portainer-backup.tar.gz"
     volumes:
-      - /var/backup:/backup
+      - ./backup:/backup
     restart: always
 ```
 
@@ -52,7 +52,7 @@ Via Docker CLI:
 ```shell
 docker run -it --rm \
   --name portainer-backup \
-  --volume $PWD/backup:/backup \
+  --volume ${PWD:-.}/backup:/backup
   --env PORTAINER_BACKUP_URL="http://portainer:9000" \
   --env PORTAINER_BACKUP_TOKEN="YOUR_ACCESS_TOKEN" \
   dockurr/portainer-backup \
@@ -82,7 +82,7 @@ The following docker command will perform a **backup** of the Portainer data.
 ```shell
 docker run -it --rm \
   --name portainer-backup \
-  --volume $PWD/backup:/backup \
+  --volume ${PWD:-.}/backup:/backup \
   --env TZ="America/New_York" \
   --env PORTAINER_BACKUP_URL="http://portainer:9000" \
   --env PORTAINER_BACKUP_TOKEN="PORTAINER_ACCESS_TOKEN" \
@@ -100,7 +100,7 @@ The following docker command will perform a **test** of the Portainer data.
 ```shell
 docker run -it --rm \
   --name portainer-backup \
-  --volume $PWD/backup:/backup \
+  --volume ${PWD:-.}/backup:/backup \
   --env TZ="America/New_York" \
   --env PORTAINER_BACKUP_URL="http://portainer:9000" \
   --env PORTAINER_BACKUP_TOKEN="PORTAINER_ACCESS_TOKEN" \
@@ -118,7 +118,7 @@ The following docker command will perform a **schedule** of the Portainer data.
 ```shell
 docker run -it --rm \
   --name portainer-backup \
-  --volume $PWD/backup:/backup \
+  --volume ${PWD:-.}/backup:/backup \
   --env TZ="America/New_York" \
   --env PORTAINER_BACKUP_URL="http://portainer:9000" \
   --env PORTAINER_BACKUP_TOKEN="PORTAINER_ACCESS_TOKEN" \
@@ -150,7 +150,7 @@ The following docker command will perform a **stacks** of the Portainer data.
 ```shell
 docker run -it --rm \
   --name portainer-backup \
-  --volume $PWD/backup:/backup \
+  --volume ${PWD:-.}/backup:/backup \
   --env TZ="America/New_York" \
   --env PORTAINER_BACKUP_URL="http://portainer:9000" \
   --env PORTAINER_BACKUP_TOKEN="PORTAINER_ACCESS_TOKEN" \
