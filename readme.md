@@ -22,7 +22,7 @@ Fork of [Portainer Backup](https://github.com/SavageSoftware/portainer-backup) w
 
 ## Usage  🐳
 
-Via Docker Compose:
+##### Via Docker Compose:
 
 ```yaml
 services:
@@ -47,7 +47,7 @@ services:
     restart: always
 ```
 
-Via Docker CLI:
+##### Via Docker CLI:
 
 ```shell
 docker run -it --rm \
