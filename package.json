@@ -46,7 +46,7 @@
         "figures": "^6.1.0",
         "gradient-string": "^3.0.0",
         "log-symbols": "^7.0.0",
-        "luxon": "^3.4.4",
+        "luxon": "^3.6.1",
         "node-cron": "^3.0.3",
         "pretty-bytes": "^6.1.1",
         "sanitize-filename": "^1.6.3",
