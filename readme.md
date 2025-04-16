@@ -52,7 +52,7 @@ services:
 ```shell
 docker run -it --rm \
   --name portainer-backup \
-  --volume ${PWD:-.}/backup:/backup \
+  --volume "${PWD:-.}/backup:/backup" \
   --env PORTAINER_BACKUP_URL="http://portainer:9000" \
   --env PORTAINER_BACKUP_TOKEN="YOUR_ACCESS_TOKEN" \
   dockurr/portainer-backup \
