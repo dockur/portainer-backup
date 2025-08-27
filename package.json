@@ -48,7 +48,7 @@
         "log-symbols": "^7.0.1",
         "luxon": "^3.6.1",
         "node-cron": "^3.0.3",
-        "pretty-bytes": "^6.1.1",
+        "pretty-bytes": "^7.0.0",
         "sanitize-filename": "^1.6.3",
         "semver-parser": "^4.1.7",
         "uuid": "^11.0.0",
