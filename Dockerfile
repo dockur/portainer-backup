@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 FROM --platform=$BUILDPLATFORM node:alpine AS builder
 
 WORKDIR /portainer-backup
