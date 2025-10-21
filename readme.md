@@ -55,7 +55,7 @@ docker run -it --rm \
   --volume "${PWD:-.}/backup:/backup" \
   --env PORTAINER_BACKUP_URL="http://portainer:9000" \
   --env PORTAINER_BACKUP_TOKEN="YOUR_ACCESS_TOKEN" \
-  dockurr/portainer-backup \
+  docker.io/dockurr/portainer-backup \
   backup
 ```
 
