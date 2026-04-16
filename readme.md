@@ -317,6 +317,7 @@ The **restore** operation is not implemented at this time.  We encountered troub
 | `-X`, `--debug`                     | `PORTAINER_BACKUP_DEBUG`          | true\|false | Print stack trace for any errors encountered|
 | `-J`, `--json`                      | `PORTAINER_BACKUP_JSON`           | true\|false | Print formatted/strucutred JSON data |
 | `-c`, `--concise`                   | `PORTAINER_BACKUP_CONCISE`        | true\|false | Print concise/limited output |
+| _(N/A)_                             | `NODE_TLS_REJECT_UNAUTHORIZED`    | true\|false | Set to false to ignore certificate errors (e.g. if Portainer is using a self-signed certificate) |
 | `-v`, `--version`                   |  _(N/A)_                          |             | Show utility version number |
 | `-h`, `--help`                      |  _(N/A)_                          |             | Show help |
 
