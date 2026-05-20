@@ -33,8 +33,10 @@ WORKDIR /portainer-backup
 
 COPY --from=builder /portainer-backup /portainer-backup
 
+ENV TZ="America/New_York"
+ENV NODE_TLS_REJECT_UNAUTHORIZED 0
+
 # DEFAULT ENV VARIABLE VALUES
-ENV TZ="America/New_York" 
 ENV PORTAINER_BACKUP_URL="http://portainer:9000"
 ENV PORTAINER_BACKUP_TOKEN=""
 ENV PORTAINER_BACKUP_DIRECTORY="/backup"
