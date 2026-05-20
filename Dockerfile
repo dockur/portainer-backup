@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM --platform=$BUILDPLATFORM node:alpine AS builder
+FROM node:alpine AS builder
 
 WORKDIR /portainer-backup
 
@@ -15,18 +15,12 @@ RUN apk update && apk add --no-cache tzdata
 ARG TARGETPLATFORM
 ENV NODE_ENV=production
 
-RUN case ${TARGETPLATFORM} in \
-         "linux/amd64")  NPM_ARCH="x64" ;; \
-         "linux/arm64")  NPM_ARCH="arm64" ;; \
-         "linux/arm"*)   NPM_ARCH="arm" ;; \
-         *) exit 1 ;; \
-    esac \
- && npm install --cpu=${NPM_ARCH} --os=linux --omit=dev
+RUN npm install --os=linux --omit=dev
     
 FROM node:alpine AS runner
 ENV NODE_ENV=production
 
-RUN apk add --no-cache tzdata && rm -rf /var/cache/apk/*
+RUN apk add --no-cache tzdata && rm -rf /tmp/* /var/cache/apk/*
 
 VOLUME "/backup"
 WORKDIR /portainer-backup
