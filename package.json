@@ -50,7 +50,7 @@
         "node-cron": "^4.2.1",
         "pretty-bytes": "^7.1.0",
         "sanitize-filename": "^1.6.3",
-        "semver-parser": "^4.1.7",
+        "semver-parser": "^4.2.1",
         "uuid": "^14.0.0",
         "yargs": "^18.0.0"
     }
