@@ -350,12 +350,12 @@ The folllowing substition **presets** are provided my the [Luxon](https://moment
 | `DATETIME_FULL_WITH_SECONDS` | full date and time with abbreviated named offset with seconds      | `October 14, 1983, 1:30:23 PM EDT`                           | `14 octobre 1983 à 13:30:23 UTC−4`                         |
 | `DATETIME_HUGE_WITH_SECONDS` | full date and time with weekday and full named offset with seconds | `Friday, October 14, 1983, 1:30:23 PM Eastern Daylight Time` | `vendredi 14 octobre 1983 à 13:30:23 heure d’été de l’Est` |
 
- # Acknowledgements 🙏
+## Stars 🌟
+[![Stargazers](https://raw.githubusercontent.com/star-stats/stars/refs/heads/data/charts/dockur-portainer-backup.svg)](https://github.com/dockur/portainer-backup/stargazers)
+
+# Acknowledgements 🙏
  
 Special thanks to [@SavageSoftware](https://github.com/SavageSoftware) for creating the original project.
-
-## Stars 🌟
-[![Stars](https://starchart.cc/dockur/portainer-backup.svg?variant=adaptive)](https://starchart.cc/dockur/portainer-backup)
 
 [build_url]: https://github.com/dockur/portainer-backup/
 [hub_url]: https://hub.docker.com/r/dockurr/portainer-backup/
