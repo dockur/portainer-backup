@@ -15,18 +15,28 @@ RUN apk update && apk add --no-cache tzdata
 ARG TARGETPLATFORM
 ENV NODE_ENV=production
 
-RUN case ${TARGETPLATFORM} in \
-         "linux/amd64")  NPM_ARCH="x64" ;; \
-         "linux/arm64")  NPM_ARCH="arm64" ;; \
-         "linux/arm"*)   NPM_ARCH="arm" ;; \
-         *) exit 1 ;; \
-    esac \
- && npm install --cpu=${NPM_ARCH} --os=linux --omit=dev
-    
+RUN <<EOF
+  set -eu
+
+  case "${TARGETPLATFORM}" in
+    "linux/amd64") NPM_ARCH="x64" ;;
+    "linux/arm64") NPM_ARCH="arm64" ;;
+    "linux/arm"*) NPM_ARCH="arm" ;;
+    *) exit 1 ;;
+  esac
+
+  npm install --cpu="${NPM_ARCH}" --os=linux --omit=dev
+EOF
+
 FROM node:alpine AS runner
 ENV NODE_ENV=production
 
-RUN apk add --no-cache tzdata && rm -rf /tmp/* /var/cache/apk/*
+RUN <<EOF
+  set -eu
+
+  apk add --no-cache tzdata
+  rm -rf /tmp/* /var/cache/apk/*
+EOF
 
 VOLUME "/backup"
 WORKDIR /portainer-backup
