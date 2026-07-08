@@ -1,20 +1,3 @@
-/**
- * -------------------------------------------------------------------
- *    ___   ___   ___   ___ ___                
- *   / __| /_\ \ / /_\ / __| __|               
- *   \__ \/ _ \ V / _ \ (_ | _|                
- *   |___/_/_\_\_/_/_\_\___|___| ___   ___ ___ 
- *   / __|/ _ \| __|_   _\ \    / /_\ | _ \ __|
- *   \__ \ (_) | _|  | |  \ \/\/ / _ \|   / _| 
- *   |___/\___/|_|   |_|   \_/\_/_/ \_\_|_\___|
- *
- * -------------------------------------------------------------------
- *    COPYRIGHT SAVAGESOFTWARE,LLC, @ 2022, ALL RIGHTS RESERVED
- *       https://github.com/SavageSoftware/portainer-backup
- * -------------------------------------------------------------------
- */
-
-// import libraries
 import axios from 'axios';
 import fs from 'node:fs';
 
@@ -144,6 +127,28 @@ export class Portainer {
                     return reject(err);
                 });     
         });        
+    }
+  
+    /**
+     * Get stack metadata for the given stack ID from the portainer server.
+     *
+     * @param {*} stackId target stack to acquire
+     * @returns stack metadata for the requested stack ID.
+     */
+    stack(stackId) {
+      return new Promise((resolve, reject) => {
+        const url = new URL(Portainer.URL.STACKS, this.config.portainer.baseUrl).toString();
+
+        axios.get(url + `/${stackId}`, {headers: { 'X-API-Key': `${this.config.portainer.token}`}})
+          // handle success (200) on status request
+          .then((response) => {
+            return resolve(response.data);
+          })
+          // handle error (!200) on status request
+          .catch((err) => {
+            return reject(err);
+          });
+      });
     }
 
     /**
