@@ -12,13 +12,15 @@
 
 </div></h1>
 
-Fork of [Portainer Backup](https://github.com/SavageSoftware/portainer-backup) with some minor bugfixes and updated dependencies.
+A maintained fork of [Portainer Backup](https://github.com/SavageSoftware/portainer-backup) with some bug fixes, updated dependencies, and a few additional features.
 
 ## Features ✨
 
-  - Backup the entire Portainer database
-  - Backup the `docker-compose` files for stacks created in the Portainer web interface
-  - Protect the archive file with a password
+  - Backup the full Portainer database
+  - Schedule automatic backup runs
+  - Export stack compose files
+  - Export stack `.env` files when present
+  - Protect backup archives with a password
 
 ## Usage  🐳
 
