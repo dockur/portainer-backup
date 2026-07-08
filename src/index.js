@@ -689,6 +689,44 @@ function buildStackFilename(stack) {
     return sanitize(`${endpointId}_${stack.Name}.docker-compose.yaml`);
 }
 
+/**
+ * Builds stack environment filename from metadata
+ * @param {*} stack stack metadata
+ * @returns string
+ */
+function buildStackEnvFilename(stack) {
+    let endpointId = stack.EndpointId.toString();
+    return sanitize(`${endpointId}_${stack.Name}.env`);
+}
+
+/**
+ * Get Portainer stack environment variables
+ * @param {*} stack stack metadata
+ * @returns array
+ */
+function getStackEnv(stack) {
+    if(!Array.isArray(stack.Env)) return [];
+
+    return stack.Env.filter((item) => {
+        const name = item.name ?? item.Name;
+        return name !== undefined && name !== null && name !== "";
+    });
+}
+
+/**
+ * Converts Portainer environment variables to .env file content
+ * @param {*} env stack environment variables
+ * @returns string
+ */
+function buildStackEnvContent(env) {
+    return env.map((item) => {
+        const name = item.name ?? item.Name;
+        const value = item.value ?? item.Value ?? "";
+
+        return `${name}=${value}`;
+    }).join("\n") + "\n";
+}
+
 // ********************************************************************************************************
 // ********************************************************************************************************
 //                                            VALIDATION METHODS
@@ -933,12 +971,27 @@ function validateStackFiles(context){
             // assign stack file reference
             stack.file = stackFile;
 
+            // check if this stack has environment variables
+            const env = getStackEnv(stack);
+
+            stack.env = env;
+
+            if(env.length > 0){
+                const envFilename = buildStackEnvFilename(stack);
+                const envFile = path.resolve(context.results.backup.directory, envFilename);
+
+                stack.envFile = envFile;
+                stack.envFilename = envFilename;
+            }
+
             // copy stack info in results data
             context.results.stacks[stack.Id] = {                
                 id: stack.Id,
                 name: stack.Name,
                 file: stack.file,
                 filename: filename,
+                envFile: stack.envFile,
+                envFilename: stack.envFilename,
                 directory: context.config.backup.directory,
                 status: "pending"
             };
@@ -971,6 +1024,38 @@ function validateStackFiles(context){
                 numberOfConflicts++;
                 render.writeln(symbols.error);
                 context.results.stacks[stack.Id].status = "already-exists";
+            }
+
+            if(stack.envFile){
+                render.write(`${figures.arrowRight}  ${stack.envFile} ... `)
+
+                // validate overwrite of existing .env file
+                if(context.config.dryRun && !fs.existsSync(stack.envFile)){
+                    render.writeln(`${symbols.success}  (DRYRUN)`);
+                    context.results.stacks[stack.Id].envStatus = "dryrun";
+                }
+                else if(!fs.existsSync(stack.envFile)){
+                    render.writeln(symbols.success);
+                    context.results.stacks[stack.Id].envStatus = "pending";
+                }
+                else if (context.config.backup.overwrite && context.config.dryRun){
+                    render.writeln(`${symbols.warning}  (OVERWRITE; DRYRUN)`);
+                    context.results.stacks[stack.Id].envStatus = "dryrun";
+                }
+                else if (context.config.dryRun){
+                    render.writeln(`${symbols.error}  (DRYRUN)`);
+                    context.results.stacks[stack.Id].envStatus = "dryrun";
+                }
+                else if (context.config.backup.overwrite){
+                    render.writeln(`${symbols.warning}  (OVERWRITE)`);
+                    context.results.stacks[stack.Id].envStatus = "overwrite";
+                    context.results.stacks[stack.Id].envOverwrite = true;
+                }
+                else{
+                    numberOfConflicts++;
+                    render.writeln(symbols.error);
+                    context.results.stacks[stack.Id].envStatus = "already-exists";
+                }
             }
         }                
 
@@ -1134,6 +1219,12 @@ function portainerBackupStacks(context){
         .then((stacks)=>{            
             render.writeln(`${symbols.success} ${stacks.length} STACKS`);
 
+            return Promise.all(stacks.map(async (stack) => {
+                const details = await portainer.stack(stack.Id);
+                return { ...stack, ...details };
+            }));
+        })
+        .then((stacks)=>{
             // assign stacks array reference
             context.cache.stacks = stacks;
 
@@ -1179,6 +1270,15 @@ function portainerBackupStackFiles(context){
                 context.results.stacks[stack.Id].size = stats.size,
                 context.results.stacks[stack.Id].created = stats.ctime.toISOString(),
                 context.results.stacks[stack.Id].status = "saved";
+
+                // write .env file only when this stack has environment variables
+                if(stack.envFile && stack.env.length > 0){
+                    fs.writeFileSync(stack.envFile, buildStackEnvContent(stack.env));
+                    let envStats = fs.statSync(stack.envFile);
+                    context.results.stacks[stack.Id].envSize = envStats.size,
+                    context.results.stacks[stack.Id].envCreated = envStats.ctime.toISOString(),
+                    context.results.stacks[stack.Id].envStatus = "saved";
+                }
             })
             .catch(err=>{
                 context.results.stacks[stack.Id].status = "failed";
